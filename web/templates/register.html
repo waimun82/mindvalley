@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title><{$smarty.const.SYSTEM_NAME}></title>
+<link rel="stylesheet" href="templates/css/style.css" type="text/css" media="screen" title="default" />
+<link rel="shortcut icon" href="templates/images/favicon.ico" />
+</head>
+
+<body id="login-bg">
+
+<!-- START: LOGIN-HOLDER -->
+<div id="login-holder">
+
+	<!-- START: LOGO -->
+	<div id="logo-login"><!--img src="templates/images/logo.png" alt="" /--></div>
+	<!-- END: LOGO -->
+
+	<div class="clear"></div>
+
+	<!-- START: LOGINBOX -->
+	<div id="loginbox">
+		<div id="loginbox-text">
+			<h4>REGISTER</h4>
+			<p>Please fill in your information below to register yourself with the system.</p>
+			<div class="error-message"><{if ($error)}><{$error}><{/if}></div>
+		</div>	
+		<!-- START: LOGIN-INNER -->
+		<div id="login-inner">
+			<form name="register_form" id="register_form" method="post" action="register.php" enctype="multipart/form-data">
+				<table border="0" cellpadding="0" cellspacing="0">
+					<tr>
+						<th><label>Email:</label></th>
+						<td><input type="text" name="email" id="email" value="<{$email}>" class="login-input" /></td>
+					</tr>
+					<tr>
+						<th><label>Password:</label></th>
+						<td><input type="password" name="password" id="password" value="<{$password}>" class="login-input" /></td>
+					</tr>
+					<tr>
+						<th><label>Retype password:</label></th>
+						<td><input type="password" name="repassword" id="repassword" value="" class="login-input" /></td>
+					</tr>
+					<tr><td colspan="2"></td></tr>
+					<tr>
+						<th></th>
+						<td>
+							<input type="submit" name="submit" id="submit" class="button" value="REGISTER"/>
+							<input type="reset" name="reset" id="reset" class="button" value="CLEAR"/>
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+		<!-- END: LOGIN-INNER -->
+		<div class="clear"></div>
+	</div>
+	<!-- END: LOGINBOX -->
+
+	<!-- START: FOOTER -->
+	<div class="footer_index">&copy;&nbsp;<a href="http://www.aecbizlink.com/" target="_blank">Munster, Inc.</a>&nbsp;2015. All rights reserved.</div>
+	<!-- END: FOOTER -->
+
+</div>
+<!-- END: LOGIN-HOLDER -->
+
+</body>
+</html>

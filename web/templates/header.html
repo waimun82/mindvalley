@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title><{$smarty.const.SYSTEM_NAME}></title>
+<link rel="shortcut icon" href="templates/images/favicon.ico" />
+
+<!-- STYLESHEETS -->
+<link rel="stylesheet" type="text/css" href="templates/css/style.css" />
+<link rel="stylesheet" type="text/css" href="templates/css/style_expand.css" />
+<link rel="stylesheet" type="text/css" href="templates/css/jquery.ui.css" />
+
+<!-- JAVASCRIPTS -->
+<script type="text/javascript" src="scripts/jquery/jquery-1.8.3.js"></script>
+<script type="text/javascript" src="scripts/jquery/jquery-ui.js"></script>
+<script type="text/javascript" src="scripts/common.js"></script>
+
+</head>
+<body>
+<!-- START: PAGE-TOP-OUTER -->
+<div id="page-top-outer">    
+	<!-- START: PAGE-TOP -->
+	<div id="page-top">
+		<!-- START: LOGO -->
+		<div id="logo"><span><{$smarty.const.SYSTEM_NAME}></span></div>
+		<!-- END: LOGO -->	
+		<!-- START: TOP-SEARCH -->
+		<!--div id="top-search">
+			<table border="0" cellpadding="0" cellspacing="0">
+				<tr>
+					<td><input type="text" value="Search" ONBLUR="if (this.value=='') { this.value='Search'; }" ONFOCUS="if (this.value=='Search') { this.value=''; }" class="top-search-inp" /></td>
+					<td>
+						<select class="styledselect">
+							<option value="">All</option>
+						</select>
+					</td>
+					<td><input type="button" value="Search" class="button" /></td>
+				</tr>
+			</table>
+		</div-->
+		<!-- END: TOP-SEARCH -->
+		<div class="clear"></div>
+	</div>
+	<!-- END: PAGE-TOP -->
+</div>
+<!-- END: PAGE-TOP-OUTER -->
+<div class="clear">&nbsp;</div>
+ 
+<!-- START: NAV-OUTER-REPEAT -->
+<div class="nav-outer-repeat"> 
+	<!-- START: NAV-OUTER -->
+	<div class="nav-outer"> 
+		<!-- START: NAV-RIGHT -->
+		<div id="nav-right">	
+			<!--div class="nav-divider">&nbsp;</div>
+			<div class="showhide-account"><a href="">My Account</a></div>
+			<div class="nav-divider">&nbsp;</div-->
+			<a href="logout.php" id="logout">Logout</a>
+			<div class="clear">&nbsp;</div>
+		</div>
+		<!-- END: NAV-RIGHT -->
+		<{include file="templates/navigation.html"}>
+	</div>
+	<div class="clear"></div>
+	<!-- END: NAV-OUTER -->
+</div>
+<!-- END: NAV-OUTER-REPEAT -->
+<div class="clear"></div>
