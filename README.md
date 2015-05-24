@@ -1,12 +1,9 @@
-# Prototype system for Mindvalley Challenge
+# Prototype System for Mindvalley Challenge
 
-## Author
+## About
 
-* Waimun Chin (waimun82@hotmail.com)
-
-## Introduction
-
-* System is written in PHP using Smarty framework and MySQL database.
+* Written by Waimun Chin (waimun82@hotmail.com) for Mindvalley Challenge.
+* System is written in PHP, Javascript, Smarty framework and MySQL database.
 * Demo is available at http://www.munster.me.
 
 ## System Requirements
