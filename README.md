@@ -1,4 +1,4 @@
-# Prototype system for Mindvalley Application
+# Prototype system for Mindvalley Challenge
 
 ## Author
 
