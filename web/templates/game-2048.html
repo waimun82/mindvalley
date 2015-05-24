@@ -1,0 +1,112 @@
+<{include file="header.html"}>
+<script type="text/javascript" src="scripts/game.js"></script>
+<!-- START: CONTENT-OUTER -->
+<div id="loading"><img id="loading-image" src="templates/images/shared/loading.gif" alt="Loading..." /></div>
+<div id="content-outer">
+	<!-- START: CONTENT -->
+	<div id="content">
+		<div id="page-heading"><h1>2048 GAME</h1></div>
+		<table border="0" width="100%" cellpadding="0" cellspacing="0" id="content-table">
+			<tr>
+				<th rowspan="3" class="sized"><img src="templates/images/shared/side_shadowleft.jpg" width="20" height="300" alt="" /></th>
+				<th class="topleft"></th>
+				<td id="tbl-border-top">&nbsp;</td>
+				<th class="topright"></th>
+				<th rowspan="3" class="sized"><img src="templates/images/shared/side_shadowright.jpg" width="20" height="300" alt="" /></th>
+			</tr>
+			<tr>
+				<td id="tbl-border-left"></td>
+				<td>
+					<!-- START: CONTENT-TABLE-INNER -->
+					<div id="content-table-inner">
+						<table border="0" width="100%" cellpadding="0" cellspacing="0">
+							<tr valign="top">
+								<td>
+									<!-- START: TABLE-CONTENT  -->
+									<div id="table-content">
+										<table border="0" width="100%" cellpadding="0" cellspacing="0" class="game-control">
+											<tr>
+												<td colspan="3">
+													<table border="0" width="100%" cellpadding="0" cellspacing="0" class="game-score">
+														<tr>
+															<td><input type="button" value="NEW GAME" class="button" ONCLICK="calculate2048(0);" /></td>
+															<td>SCORE: <span id="score"></span></td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+											<tr>
+												<td></td>
+												<td><input type="button" value="&#65514;" class="game-button vertical" ONCLICK="calculate2048(1);" /></td>
+												<td></td>
+											</tr>
+											<tr>
+												<td><input type="button" value="&#65513;" class="game-button horizontal" ONCLICK="calculate2048(2);" /></td>
+												<td>
+													<table border="0" width="100%" cellpadding="0" cellspacing="0" class="game-grid">
+														<tr>
+															<td><div id="1-1"></div></td>
+															<td><div id="1-2"></div></td>
+															<td><div id="1-3"></div></td>
+															<td><div id="1-4"></div></td>
+														</tr>
+														<tr>
+															<td><div id="2-1"></div></td>
+															<td><div id="2-2"></div></td>
+															<td><div id="2-3"></div></td>
+															<td><div id="2-4"></div></td>
+														</tr>
+														<tr>
+															<td><div id="3-1"></div></td>
+															<td><div id="3-2"></div></td>
+															<td><div id="3-3"></div></td>
+															<td><div id="3-4"></div></td>
+														</tr>
+														<tr>
+															<td><div id="4-1"></div></td>
+															<td><div id="4-2"></div></td>
+															<td><div id="4-3"></div></td>
+															<td><div id="4-4"></div></td>
+														</tr>
+													</table>
+												</td>
+												<td><input type="button" value="&#65515;" class="game-button horizontal" ONCLICK="calculate2048(3);" /></td>
+											</tr>
+											<tr>
+												<td></td>
+												<td><input type="button" value="&#65516;" class="game-button vertical" ONCLICK="calculate2048(4);" /></td>
+												<td></td>
+											</tr>
+										</table>
+									</div>
+									<!-- END: TABLE-CONTENT  -->
+									<div class="cleargap10"></div>
+									<div class="clear"></div>
+								</td>
+								<td>
+							</tr>
+							<tr>
+								<td><img src="templates/images/shared/blank.gif" width="695" height="1" alt="blank" /></td>
+								<td></td>
+							</tr>
+						</table>
+						<div class="clear"></div>
+					</div>
+					<!-- END: CONTENT-TABLE-INNER -->
+				</td>
+				<td id="tbl-border-right"></td>
+			</tr>
+			<tr>
+				<th class="sized bottomleft"></th>
+				<td id="tbl-border-bottom">&nbsp;</td>
+				<th class="sized bottomright"></th>
+			</tr>
+		</table>
+		<div class="clear">&nbsp;</div>
+	</div>
+	<!-- END: CONTENT -->
+	<div class="clear">&nbsp;</div>
+</div>
+<!-- END: CONTENT-OUTER -->
+<div class="clear">&nbsp;</div>
+<{include file="footer.html"}>

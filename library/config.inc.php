@@ -9,7 +9,7 @@ DEFINE('DB_DEBUGMODE', false);
 
 // SITE SETTINGS
 DEFINE("SYSTEM_SECRET_KEY", "mindvalley123");
-DEFINE("SYSTEM_NAME", "Prototype System for Mindvalley");
+DEFINE("SYSTEM_NAME", "Prototype System for Mindvalley Challenge");
 
 DEFINE("SYSTEM_TINY_URL_HOST", "http://munster.me");
 DEFINE("SYSTEM_PREVIEW_URL_HOST", "http://preview.munster.me");
