@@ -2,6 +2,9 @@
 require ("config.inc.php");
 require ("global.inc.php");
 
+session_start();
+session_set_cookie_params(14400);
+
 // SMARTY SETTINGS
 require ("smarty/Smarty.class.php");
 require ("smarty/SmartyPaginate.class.php");
@@ -11,8 +14,8 @@ $smarty->debugging = false;
 $smarty->caching = true;
 $smarty->cache_lifetime = 120;
 $smarty->template_dir = "templates";
-$smarty->compile_dir = SYSTEM_DOCUMENT_ROOT."/library/smarty/templates_c";
-$smarty->cache_dir = SYSTEM_DOCUMENT_ROOT."/library/smarty/cache";
+$smarty->compile_dir = dirname(__DIR__)."/library/smarty/templates_c";
+$smarty->cache_dir = dirname(__DIR__)."/library/smarty/cache";
 $smarty->left_delimiter = "<{";
 $smarty->right_delimiter = "}>";
 

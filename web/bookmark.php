@@ -1,28 +1,40 @@
 <?php
 include ("../library/base.inc.php");
 
+// Check user login
 $Member->checkLogin();
 
+// Add bookmark action
 if ($_REQUEST['add']) {
+
+	// Validate URL format
 	if (!$Bookmark->validateURLFormat($_REQUEST['url'])) {	
 		$smarty->assign("error", "ERROR: Invalid URL format!");
 		$smarty->assign("url", $_REQUEST['url']);
 	} else {
+
+		// Validate URL already exist
 		if (!$Bookmark->validateURLExist($_REQUEST['url'])) {
 			$smarty->assign("error", "ERROR: URL already exist!");
 			$smarty->assign("url", $_REQUEST['url']);
 		} else {
+
+			// Create bookmark record
 			$Bookmark->bookmarkUrl = $_REQUEST['url'];
 			$Bookmark->bookmarkStatus = GBL_PUBLISH_STATUS_ACTIVE;
 			if (!$Bookmark->createBookmark()) {
 				$smarty->assign("error", "ERROR: Unable to create record!");
 				$smarty->assign("url", $_REQUEST['url']);
 			} else {
+
+				// Update .htaccess
 				$Bookmark->writeHtaccess("../.htaccess");
 				$smarty->assign("success", "URL record created!");
 			}
 		}
 	}
+
+// Delete bookmark action
 } else if ($_REQUEST['delete']) {
 	if (!$Bookmark->deleteBookmark($_REQUEST['id'])) {
 		$smarty->assign("error", "ERROR: Unable to update record!");
@@ -31,6 +43,7 @@ if ($_REQUEST['add']) {
 	}
 }
 
+// Show bookmark listing
 if ($arrResults = $Bookmark->getBookmark(NULL, $_SESSION['member']['id'])) {
 	SmartyPaginate::connect();
 	SmartyPaginate::setLimit(SYSTEM_RESULTS_PER_PAGE);

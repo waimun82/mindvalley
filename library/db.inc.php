@@ -22,13 +22,13 @@ define('ADODB_FORCE_TYPE', 3);
 		function db()	// db constructor
 		{
 			$this->totalquerytime = $this->totalquerycount = 0;
-			require_once (SYSTEM_DOCUMENT_ROOT."/plugins/adodb/adodb.inc.php");
+			require_once (dirname(__DIR__)."/plugins/adodb/adodb.inc.php");
 		
-			if ($this->idbconn = &ADONewConnection(_DB_DBTYPE))
+			if ($this->idbconn = &ADONewConnection(DB_TYPE))
 		    {
-		    	if ($this->idbconn->Connect(_DB_DBHOST, _DB_DBUSER, _DB_DBPASS, _DB_DBNAME))
+		    	if ($this->idbconn->Connect(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME))
 		    	{
-		    		$this->idbconn->debug = _DB_DBDEBUGMODE;
+		    		$this->idbconn->debug = DB_DEBUGMODE;
 		    		$this->idbconn->SetFetchMode(ADODB_FETCH_ASSOC);
 		    		
 		    	}
