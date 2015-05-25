@@ -44,11 +44,10 @@
 
 ## Limitations
 
-* Creating a bookmark using an existing tiny URL may cause infinite loop.
+* Creating a bookmark using an existing tiny URL may cause infinite loop. [FIXED: 25-May-2015 8:38PM]
 
 ## Future Enhancements
 
 * Able to edit bookmarks.
 * Implement bookmark web services for easier integration with other websites or applications.
 * Implement description indexing using meta tags of the bookmarked URL.
-* Fix limitation with bookmarking existing tiny URL and cause infinite loop.
