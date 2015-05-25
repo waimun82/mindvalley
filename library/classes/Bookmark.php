@@ -47,6 +47,15 @@ class Bookmark extends db {
 		}
 	}
 
+	public function validateURLHost($url) {
+		$host = parse_url($url, PHP_URL_HOST);
+		if (($host == parse_url(SYSTEM_TINY_URL_HOST, PHP_URL_HOST)) || ($host == parse_url(SYSTEM_PREVIEW_URL_HOST, PHP_URL_HOST))) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
 	/*
 	* Validate URL does not already exist
 	* @access public
