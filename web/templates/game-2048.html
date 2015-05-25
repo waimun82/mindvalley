@@ -1,5 +1,6 @@
 <{include file="header.html"}>
 <script type="text/javascript" src="scripts/game.js"></script>
+<script type="text/javascript">Game = new game();</script>
 <!-- START: CONTENT-OUTER -->
 <div id="loading"><img id="loading-image" src="templates/images/shared/loading.gif" alt="Loading..." /></div>
 <div id="content-outer">
@@ -29,7 +30,7 @@
 												<td colspan="3">
 													<table border="0" width="100%" cellpadding="0" cellspacing="0" class="game-score">
 														<tr>
-															<td><input type="button" value="NEW GAME" class="button" ONCLICK="calculate2048(0);" /></td>
+															<td><input type="button" value="NEW GAME" class="button" ONCLICK="Game.newGame();" /></td>
 															<td>SCORE: <span id="score"></span></td>
 														</tr>
 													</table>
@@ -37,44 +38,44 @@
 											</tr>
 											<tr>
 												<td></td>
-												<td><input type="button" value="&#65514;" class="game-button vertical" ONCLICK="calculate2048(1);" /></td>
+												<td><input type="button" value="&#65514;" class="game-button vertical" ONCLICK="Game.navigateBlock(1);" /></td>
 												<td></td>
 											</tr>
 											<tr>
-												<td><input type="button" value="&#65513;" class="game-button horizontal" ONCLICK="calculate2048(2);" /></td>
+												<td><input type="button" value="&#65513;" class="game-button horizontal" ONCLICK="Game.navigateBlock(2);" /></td>
 												<td>
 													<table border="0" width="100%" cellpadding="0" cellspacing="0" class="game-grid">
 														<tr>
-															<td><div id="1-1"></div></td>
-															<td><div id="1-2"></div></td>
-															<td><div id="1-3"></div></td>
-															<td><div id="1-4"></div></td>
+															<td id="0-0"></td>
+															<td id="0-1"></td>
+															<td id="0-2"></td>
+															<td id="0-3"></td>
 														</tr>
 														<tr>
-															<td><div id="2-1"></div></td>
-															<td><div id="2-2"></div></td>
-															<td><div id="2-3"></div></td>
-															<td><div id="2-4"></div></td>
+															<td id="1-0"></td>
+															<td id="1-1"></td>
+															<td id="1-2"></td>
+															<td id="1-3"></td>
 														</tr>
 														<tr>
-															<td><div id="3-1"></div></td>
-															<td><div id="3-2"></div></td>
-															<td><div id="3-3"></div></td>
-															<td><div id="3-4"></div></td>
+															<td id="2-0"></td>
+															<td id="2-1"></td>
+															<td id="2-2"></td>
+															<td id="2-3"></td>
 														</tr>
 														<tr>
-															<td><div id="4-1"></div></td>
-															<td><div id="4-2"></div></td>
-															<td><div id="4-3"></div></td>
-															<td><div id="4-4"></div></td>
+															<td id="3-0"></td>
+															<td id="3-1"></td>
+															<td id="3-2"></td>
+															<td id="3-3"></td>
 														</tr>
 													</table>
 												</td>
-												<td><input type="button" value="&#65515;" class="game-button horizontal" ONCLICK="calculate2048(3);" /></td>
+												<td><input type="button" value="&#65515;" class="game-button horizontal" ONCLICK="Game.navigateBlock(3);" /></td>
 											</tr>
 											<tr>
 												<td></td>
-												<td><input type="button" value="&#65516;" class="game-button vertical" ONCLICK="calculate2048(4);" /></td>
+												<td><input type="button" value="&#65516;" class="game-button vertical" ONCLICK="Game.navigateBlock(4);" /></td>
 												<td></td>
 											</tr>
 										</table>
