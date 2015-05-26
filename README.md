@@ -24,7 +24,7 @@
 * SYSTEM_TINY_URL_HOST: The tiny URL host to be used for the Bookmark module.
 * SYSTEM_PREVIEW_URL_HOST: The preview URL host or sub-domain to be used for the Bookmark module. Access using the preview URL will not increase the view count of the bookmark record.
 
-## System Features
+## System Summary
 
 ### Accessing The System
 
@@ -42,12 +42,25 @@
 
 4. When a request comes from the tiny URL, the index page will search for the full URL from the database record using the hashkey parameter and update the view count of the bookmark record. The index page will then redirect to the intended full URL.
 
+### 2048 Game
+
+1. Click on NEW GAME to generate a two-dimensional array (ie. a matrix) and create a corresponding grid table in the HTML.
+
+2. Click on the arrow buttons to navigate blocks. The blocks will be moved and summed accordingly by looping through and manipulating the index key of the two dimensional array.
+
+3. Game will end when each of the generated two-dimensional array has stored a value or one of the value in the two-dimensional array has reached 2048. 
+
 ## Limitations
 
-* Creating a bookmark using an existing tiny URL may cause infinite loop. [FIXED: 25-May-2015 8:38PM]
+* My Bookmarks: Creating a bookmark using an existing tiny URL may cause infinite loop. [FIXED: 25-May-2015 8:38PM]
+* 2048 Game: For loops in navigateBlock() for 2048 game may not be efficient (and may be buggy).
 
 ## Future Enhancements
 
-* Able to edit bookmarks.
-* Implement bookmark web services for easier integration with other websites or applications.
-* Implement description indexing using meta tags of the bookmarked URL.
+* Registration: Implement capcha code in registration form.
+* My Bookmarks: Able to edit bookmarks.
+* My Bookmarks: Implement web services for easier integration with other websites or applications.
+* My Bookmarks: Implement description indexing using meta tags of the bookmarked URL.
+* 2048 Game: Dynamically control defaultRows, defaultColumns, defaultStartingBlocks, defaultAddOnBlocks and defaultEndState using the UI. UI is ready but have not been implemented into the newGame() function yet.
+* 2048 Game: Able to save score in member record and display in leaderboard.
+* 2048 Game: Able to use keyboard keys and mouse slide to navigate blocks.
