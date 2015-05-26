@@ -25,16 +25,62 @@
 								<td>
 									<!-- START: TABLE-CONTENT  -->
 									<div id="table-content">
-										<table border="0" width="100%" cellpadding="0" cellspacing="0" class="game-control">
+										<table border="0" width="47%" cellpadding="0" cellspacing="0" class="form-table">
 											<tr>
-												<td colspan="3">
-													<table border="0" width="100%" cellpadding="0" cellspacing="0" class="game-score">
-														<tr>
-															<td><input type="button" value="NEW GAME" class="button" ONCLICK="Game.newGame();" /></td>
-															<td>SCORE: <span id="score"></span></td>
-														</tr>
-													</table>
+												<th>Grid rows:</th>
+												<td>
+													<SELECT name="grid_rows" id="grid_rows">
+														<OPTION value="4">4</OPTION>
+														<OPTION value="5">5</OPTION>
+														<OPTION value="6">6</OPTION>
+													</SELECT>												
 												</td>
+											</tr>
+											<tr>
+												<th>Grid columns:</th>
+												<td>
+													<SELECT name="grid_columns" id="grid_columns">
+														<OPTION value="4">4</OPTION>
+														<OPTION value="5">5</OPTION>
+														<OPTION value="6">6</OPTION>
+													</SELECT>												
+												</td>
+											</tr>
+											<tr>
+												<th>Starting blocks:</th>
+												<td>
+													<SELECT name="starting_blocks" id="starting_blocks">
+														<OPTION value="2">2 blocks</OPTION>
+														<OPTION value="3">3 blocks</OPTION>
+														<OPTION value="4">4 blocks</OPTION>
+													</SELECT>												
+												</td>
+											</tr>
+											<tr>
+												<th>Add-on blocks:</th>
+												<td>
+													<SELECT name="add_on_blocks" id="add_on_blocks">
+														<OPTION value="1">1 block</OPTION>
+														<OPTION value="2">2 blocks</OPTION>
+														<OPTION value="3">3 blocks</OPTION>
+													</SELECT>												
+												</td>
+											</tr>
+											<tr>
+												<th>Victory condition:</th>
+												<td>
+													<SELECT name="end_state" id="end_state">
+														<OPTION value="2048">2048</OPTION>
+														<OPTION value="4096">4096</OPTION>
+													</SELECT>												
+												</td>
+											</tr>
+											<tr><td width="30%"></td><td></td></tr>
+											<tr><td colspan="2"><input type="button" value="NEW GAME" class="button" ONCLICK="Game.newGame();" /></td></tr>
+										</table>
+										<table border="0" width="100%" cellpadding="0" cellspacing="0" class="game-control" id="game-control">
+											<tr>
+												<th colspan="3">YOUR SCORE: <span id="score">0</span></th>
 											</tr>
 											<tr>
 												<td></td>
@@ -43,34 +89,7 @@
 											</tr>
 											<tr>
 												<td><input type="button" value="&#65513;" class="game-button horizontal" ONCLICK="Game.newGame.navigateBlock(4);" /></td>
-												<td id="game-grid">
-													<table border="0" width="100%" cellpadding="0" cellspacing="0" class="game-grid">
-														<tr>
-															<td id="0-0"></td>
-															<td id="0-1"></td>
-															<td id="0-2"></td>
-															<td id="0-3"></td>
-														</tr>
-														<tr>
-															<td id="1-0"></td>
-															<td id="1-1"></td>
-															<td id="1-2"></td>
-															<td id="1-3"></td>
-														</tr>
-														<tr>
-															<td id="2-0"></td>
-															<td id="2-1"></td>
-															<td id="2-2"></td>
-															<td id="2-3"></td>
-														</tr>
-														<tr>
-															<td id="3-0"></td>
-															<td id="3-1"></td>
-															<td id="3-2"></td>
-															<td id="3-3"></td>
-														</tr>
-													</table>
-												</td>
+												<td id="game-grid"></td>
 												<td><input type="button" value="&#65515;" class="game-button horizontal" ONCLICK="Game.newGame.navigateBlock(2);" /></td>
 											</tr>
 											<tr>

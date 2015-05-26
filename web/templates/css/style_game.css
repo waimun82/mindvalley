@@ -1,19 +1,19 @@
 /* GAME GRID */
 
 .game-control {
+	visibility: hidden;
 	background-color: #EEEEEE;
 	border: 1px solid #000000;
 	width: auto;
 	height: auto;
-	
 }
-.game-control .game-score {
+.game-control th {
+	background-color: #D8D8D8;
 	border-bottom: 1px solid #000000;
 	font-size: 20px;
 	font-weight: bold;
-}
-.game-control .game-score td {
 	padding: 10px;
+	text-align: left;
 }
 .game-control .game-button {
 	background-color: #3D3935;
@@ -31,20 +31,21 @@
 	height: 100%;
 	margin: 0 5px;
 }
-.game-grid {
+#game-grid {
+	background-color: #FFFFFF;
+	width: auto;
+	height: auto;
+}
+#game-grid .game-grid {
 	border: 1px solid #000000;
-	width: 400px;
-	height: 400px;
+	width: auto;
+	height: auto;
 	background-color: #F2F2F2;
 }
-.game-grid td {
+#game-grid .game-grid td {
 	border: 1px solid #000000;
 	width: 100px;
 	height: 100px;
 	text-align: center;
 	font-size: 30px;
-}
-.game-grid div {
-	width: auto;
-	height: auto;
 }

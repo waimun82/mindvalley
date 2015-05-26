@@ -19,7 +19,26 @@ function game() {
 			array[counter] = new Array(defaultColumns);
 		}
 		return array;
-	}	
+	}
+	
+	/*
+	* Create HTML grid and populate
+	* @access private
+	* @param array $cell - Cell array to create HTML
+	*/
+	function createGrid(cell) {
+		var table = '<table border="0" width="100%" cellpadding="0" cellspacing="0" class="game-grid">';
+		for(y = 0; y < cell.length; y++) {
+			table += '<tr>'
+			for(x = 0; x < cell[y].length; x++) {
+				table += '<td id="'+y+'-'+x+'"></td>';
+			}
+			table += '</tr>';
+		}
+		table += '</table>';
+		document.getElementById('game-control').style.visibility = 'visible';
+		document.getElementById('game-grid').innerHTML = table;
+	}
 
 	/*
 	* Generate random number from 0 onwards
@@ -60,15 +79,63 @@ function game() {
 	function populateGrid(cell) {
 		for(y = 0; y < cell.length; y++) {
 			for(x = 0; x < cell[y].length; x++) {
-				if(cell[y][x] != null) {
-					document.getElementById(y+'-'+x).innerHTML = cell[y][x];
-					document.getElementById(y+'-'+x).style.backgroundColor = '#FFFFFF';
-				} else {
-					document.getElementById(y+'-'+x).innerHTML = '';
-					document.getElementById(y+'-'+x).style.backgroundColor = '';
+				var color = '';	
+				document.getElementById(y+'-'+x).style.backgroundColor = color;
+				document.getElementById(y+'-'+x).innerHTML = '';
+				if(cell[y][x] != undefined) {		
+					switch(cell[y][x]) {
+						case 2: color = '#FFFFFF'; break;
+						case 4: color = '#FFFCCF'; break;
+						case 8: color = '#FFE8CF'; break;
+						case 16: color = '#FCFFCF'; break;
+						case 32: color = '#DDFFCF'; break;
+						case 64: color = '#CFFFE8'; break;
+						case 128: color = '#CFEDFF'; break;
+						case 256: color = '#D2CFFF'; break;
+						case 512: color = '#FFCFFF'; break;
+						case 1024: color = '#FFCFE2'; break;
+						case 2048: color = '#FC8C8C'; break;
+					}
+					document.getElementById(y+'-'+x).style.backgroundColor = color;
+					document.getElementById(y+'-'+x).innerHTML = cell[y][x];	
 				}
 			}
 		}
+	}
+	
+	/*
+	* Check grid array if the victory condition has been met or grid array has been fully populated
+	* @access private
+	* @param array $cell - Cell array to check
+	* @param integer $condition - End state condition
+	* @param integer $score - End state score
+	*/
+	function checkEndState(cell, condition, score) {
+		var win = false;
+		var cont = false;
+		for(y = 0; y < cell.length; y++) {
+			for(x = 0; x < cell[y].length; x++) {
+				if(cell[y][x] == 2048) {
+					win = true;
+				} else if(cell[y][x] == undefined) {
+					cont = true;
+				}
+			}
+		}
+		if(win == true) {
+			alert('COMPLETED!\nYOUR SCORE: '+score);
+		} else if(cont != true) {
+			alert('GAME OVER!\nYOUR SCORE: '+score);
+		}
+	}
+	
+	/*
+	* Update score in HTML
+	* @access private
+	* @param integer $score - Score to update in HTML
+	*/
+	function updateScore(score) {
+		document.getElementById('score').innerHTML = score;
 	}
 
 	/*
@@ -77,9 +144,15 @@ function game() {
 	* @param integer $blocks - Starting blocks to generate
 	*/
 	function newGame() {
+		
+		// Starting score
+		var score = 0;
 
 		// Create new grid matrix array
 		var cell = create2DArray();
+
+		// Create grid HTML
+		createGrid(cell);
 
 		// Create starting blocks
 		addBlock(cell, defaultStartingBlocks);
@@ -100,6 +173,17 @@ function game() {
 				case 1:
 					for(x = 0; x < columns; x++) {
 						for(y = 0; y < rows; y++) {
+							if(cell[y][x] != undefined) {
+								for(key = y; key < rows; key++) {
+									if((y != key) && (cell[key][x] != undefined) && (cell[y][x] == cell[key][x])) {
+										cell[y][x] += cell[key][x];
+										cell[key][x] = undefined;
+										score += cell[y][x];
+									}
+								}
+							}
+						}
+						for(y = 0; y < rows; y++) {
 							if(cell[y][x] == undefined) {
 								for(key = y; key < rows; key++) {
 									if((cell[y][x] == undefined) && (cell[key][x] != undefined)) {
@@ -115,6 +199,17 @@ function game() {
 				// Move right
 				case 2:
 					for(y = 0; y < rows; y++) {
+						for(x = columns -1; x >= 0; x--) {
+							if(cell[y][x] != undefined) {
+								for(key = x; key >= 0; key--) {
+									if((x != key) && (cell[y][key] != undefined) && (cell[y][x] == cell[y][key])) {
+										cell[y][x] += cell[y][key];
+										cell[y][key] = undefined;
+										score += cell[y][x];
+									}
+								}
+							}
+						}
 						for(x = columns -1; x >= 0; x--) {
 							if(cell[y][x] == undefined) {
 								for(key = x; key >= 0; key--) {
@@ -132,6 +227,17 @@ function game() {
 				case 3: 
 					for(x = 0; x < columns; x++) {
 						for(y = rows - 1; y >= 0; y--) {
+							if(cell[y][x] != undefined) {
+								for(key = y; key >= 0; key--) {
+									if((y != key) && (cell[key][x] != undefined) && (cell[y][x] == cell[key][x])) {
+										cell[y][x] += cell[key][x];
+										cell[key][x] = undefined;
+										score += cell[y][x];
+									}
+								}
+							}
+						}
+						for(y = rows - 1; y >= 0; y--) {
 							if(cell[y][x] == undefined) {
 								for(key = y; key >= 0; key--) {
 									if((cell[y][x] == undefined) &&(cell[key][x] != undefined)) {
@@ -147,6 +253,17 @@ function game() {
 				// Move left
 				case 4:
 					for(y = 0; y < rows; y++) {
+						for(x = 0; x < columns; x++) {
+							if(cell[y][x] != undefined) {
+								for(key = x; key < columns; key++) {
+									if((x != key) && (cell[y][key] != undefined) && (cell[y][x] == cell[y][key])) {
+										cell[y][x] += cell[y][key];
+										cell[y][key] = undefined;
+										score += cell[y][x];
+									}
+								}
+							}
+						}
 						for(x = 0; x < columns; x++) {
 							if(cell[y][x] == undefined) {
 								for(key = x; key < columns; key++) {
@@ -166,6 +283,12 @@ function game() {
 			
 			// Repopulate grid cell
 			populateGrid(cell);
+			
+			// Update score
+			updateScore(score);
+
+			// Check end state
+			checkEndState(cell, defaultEndState, score);
 
 			// Debug console
 			//console.debug(JSON.stringify(cell));
@@ -191,14 +314,11 @@ function game() {
 *
 * FUTURE ENHANCEMENTS:
 * -------------------
-* Dynamically generate grid table based on number of rows and columns in UI.
 * Dynamically control defaultRows, defaultColumns, defaultStartingBlocks, defaultAddOnBlocks and defaultEndState in UI.
-* Able to save score in member record and display best score.
-* Able to use keyboard arrow keys to navigate block.
-* Cell color changes according to number.
+* Able to save score in member record and display in leaderboard.
+* Able to use keyboard arrow keys and mouse slide to navigate block.
 *
 * LIMITATIONS:
 * -----------
-* Error when executing navigateBlock() without executing newGame().
-* For loops in navigateBlock may not be efficient.
+* For loops in navigateBlock may not be efficient (and may be buggy).
 */
