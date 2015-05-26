@@ -66,4 +66,15 @@ if ($arrResults = $Bookmark->getBookmark(NULL, $_SESSION['member']['id'])) {
 $smarty->display('templates/bookmark.html');
 SmartyPaginate::reset();
 
+/*
+* ----- *
+* NOTES
+* ----- *
+*
+* FUTURE ENHANCEMENTS:
+* -------------------
+* Implement bookmark web services for easier integration with other websites or applications.
+* Implement description indexing using meta tags of the bookmarked URL.
+*/
+
 ?>
