@@ -27,29 +27,24 @@
 									<div id="table-content">
 										<table border="0" width="47%" cellpadding="0" cellspacing="0" class="form-table">
 											<tr>
-												<th>Grid rows:</th>
+												<th>Grid size:</th>
 												<td>
-													<SELECT name="grid_rows" id="grid_rows">
+													<SELECT id="rows">
 														<OPTION value="4">4</OPTION>
 														<OPTION value="5">5</OPTION>
 														<OPTION value="6">6</OPTION>
-													</SELECT>												
-												</td>
-											</tr>
-											<tr>
-												<th>Grid columns:</th>
-												<td>
-													<SELECT name="grid_columns" id="grid_columns">
+													</SELECT>
+													<SELECT id="columns">
 														<OPTION value="4">4</OPTION>
 														<OPTION value="5">5</OPTION>
 														<OPTION value="6">6</OPTION>
-													</SELECT>												
+													</SELECT>
 												</td>
 											</tr>
 											<tr>
 												<th>Starting blocks:</th>
 												<td>
-													<SELECT name="starting_blocks" id="starting_blocks">
+													<SELECT id="starting_blocks">
 														<OPTION value="2">2 blocks</OPTION>
 														<OPTION value="3">3 blocks</OPTION>
 														<OPTION value="4">4 blocks</OPTION>
@@ -59,7 +54,7 @@
 											<tr>
 												<th>Add-on blocks:</th>
 												<td>
-													<SELECT name="add_on_blocks" id="add_on_blocks">
+													<SELECT id="addon_blocks">
 														<OPTION value="1">1 block</OPTION>
 														<OPTION value="2">2 blocks</OPTION>
 														<OPTION value="3">3 blocks</OPTION>
@@ -69,9 +64,14 @@
 											<tr>
 												<th>Victory condition:</th>
 												<td>
-													<SELECT name="end_state" id="end_state">
+													<SELECT id="end_state">
 														<OPTION value="2048">2048</OPTION>
 														<OPTION value="4096">4096</OPTION>
+														<OPTION value="8192">8192</OPTION>
+														<OPTION value="16384">16384</OPTION>
+														<OPTION value="32768">32768</OPTION>
+														<OPTION value="65536">65536</OPTION>
+														<OPTION value="131072">131072</OPTION>
 													</SELECT>												
 												</td>
 											</tr>

@@ -73,9 +73,10 @@ SmartyPaginate::reset();
 *
 * FUTURE ENHANCEMENTS:
 * -------------------
+* Able to edit bookmarks.
 * Implement bookmark web services for easier integration with other websites or applications.
 * Implement description indexing using meta tags of the bookmarked URL.
-* Implement capcha code to registration form.
+* Implement capcha code in registration form.
 */
 
 ?>

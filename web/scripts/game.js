@@ -1,7 +1,7 @@
 function game() {
 	
 	var gameObject = new Object();
-	
+
 	// @access public
 	var defaultRows = 4; // Default row of grid
 	var defaultColumns = 4; // Default column of grid
@@ -10,14 +10,24 @@ function game() {
 	var defaultEndState = 2048; // Default end state of the game
 
 	/*
+	* Generate random number from 0 onwards
+	* @access private
+	* @param integer $limit - Limit of the random number
+	*/
+	function generateRandom(limit) {
+		return Math.floor((Math.random() * limit));
+	}
+
+	/*
 	* Create 2-dimensional arrays
 	* @access private
 	*/
-	function create2DArray() {
-		var array = new Array(defaultRows);
-		for (counter = 0; counter < defaultRows; counter++) {
-			array[counter] = new Array(defaultColumns);
+	function create2DArray(rows, columns) {
+		var array = new Array(rows);
+		for (counter = 0; counter < rows; counter++) {
+			array[counter] = new Array(columns);
 		}
+		//var array = [[,,,,],[,,,,],[,,,,],[,,,,]]; // For debugging
 		return array;
 	}
 	
@@ -41,15 +51,6 @@ function game() {
 	}
 
 	/*
-	* Generate random number from 0 onwards
-	* @access private
-	* @param integer $limit - Limit of the random number
-	*/
-	function generateRandom(limit) {
-		return Math.floor((Math.random() * limit));
-	}
-
-	/*
 	* Add new block to grid
 	* @access private
 	* @param array $cell - Cell array to populate
@@ -59,13 +60,15 @@ function game() {
 		y = new Array();
 		x = new Array();
 		num = new Array();
+		rows = cell.length;
+		columns = cell[0].length;
 		for(key = 0; key < quantity; key++) {
-			y[key] = generateRandom(defaultRows);
-			x[key] = generateRandom(defaultColumns);
-			num[key] = (generateRandom(2) + 1) * 2; // generateRandom(2) + 1 * 2 due to number must be 2 or 4
+			y[key] = generateRandom(rows);
+			x[key] = generateRandom(columns);
+			num[key] = (generateRandom(2) + 1) * 2;
 			while(cell[y[key]][x[key]] != undefined) {
-				y[key] = generateRandom(defaultRows);
-				x[key] = generateRandom(defaultColumns);
+				y[key] = generateRandom(rows);
+				x[key] = generateRandom(columns);
 			}
 			cell[y[key]][x[key]] = num[key];
 		}
@@ -85,16 +88,17 @@ function game() {
 				if(cell[y][x] != undefined) {		
 					switch(cell[y][x]) {
 						case 2: color = '#FFFFFF'; break;
-						case 4: color = '#FFFCCF'; break;
-						case 8: color = '#FFE8CF'; break;
-						case 16: color = '#FCFFCF'; break;
-						case 32: color = '#DDFFCF'; break;
-						case 64: color = '#CFFFE8'; break;
-						case 128: color = '#CFEDFF'; break;
-						case 256: color = '#D2CFFF'; break;
-						case 512: color = '#FFCFFF'; break;
-						case 1024: color = '#FFCFE2'; break;
-						case 2048: color = '#FC8C8C'; break;
+						case 4: color = '#FFE8CF'; break;
+						case 8: color = '#FFAB84'; break;
+						case 16: color = '#FCFF89'; break;
+						case 32: color = '#4EFFD9'; break;
+						case 64: color = '#4ECEFF'; break;
+						case 128: color = '#5242FF'; break;
+						case 256: color = '#F742FF'; break;
+						case 512: color = '#FF20D7'; break;
+						case 1024: color = '#FF2072'; break;
+						default:
+						case 2048: color = '#FF0000'; break;
 					}
 					document.getElementById(y+'-'+x).style.backgroundColor = color;
 					document.getElementById(y+'-'+x).innerHTML = cell[y][x];	
@@ -115,7 +119,7 @@ function game() {
 		var cont = false;
 		for(y = 0; y < cell.length; y++) {
 			for(x = 0; x < cell[y].length; x++) {
-				if(cell[y][x] == 2048) {
+				if(cell[y][x] == condition) {
 					win = true;
 				} else if(cell[y][x] == undefined) {
 					cont = true;
@@ -144,18 +148,34 @@ function game() {
 	* @param integer $blocks - Starting blocks to generate
 	*/
 	function newGame() {
-		
+
+		// Get default variables
+		var selectRows = document.getElementById('rows');
+		var selectedRows = selectRows[selectRows.selectedIndex].value ? parseInt(selectRows[selectRows.selectedIndex].value) : defaultRows;
+
+		var selectColumns = document.getElementById('columns');
+		var selectedColumns = selectColumns[selectColumns.selectedIndex].value ? parseInt(selectColumns[selectColumns.selectedIndex].value) : defaultColumns;
+
+		var selectStartingBlocks = document.getElementById('starting_blocks');
+		var selectedStartingBlocks = selectStartingBlocks[selectStartingBlocks.selectedIndex].value ? parseInt(selectStartingBlocks[selectStartingBlocks.selectedIndex].value) : defaultStartingBlocks;
+
+		var selectAddOnBlocks = document.getElementById('addon_blocks');
+		var selectedAddOnBlocks = selectAddOnBlocks[selectAddOnBlocks.selectedIndex].value ? parseInt(selectAddOnBlocks[selectAddOnBlocks.selectedIndex].value) : defaultAddOnBlocks;
+
+		var selectEndState = document.getElementById('end_state');
+		var selectedEndState = selectEndState[selectEndState.selectedIndex].value ? parseInt(selectEndState[selectEndState.selectedIndex].value) : defaultEndState;
+
 		// Starting score
 		var score = 0;
 
 		// Create new grid matrix array
-		var cell = create2DArray();
+		var cell = create2DArray(selectedRows, selectedColumns);
 
 		// Create grid HTML
 		createGrid(cell);
 
 		// Create starting blocks
-		addBlock(cell, defaultStartingBlocks);
+		addBlock(cell, selectedStartingBlocks);
 
 		/*
 		* Controller to navigate block
@@ -166,6 +186,7 @@ function game() {
 			
 			var rows = cell.length;
 			var columns = cell[0].length;
+			var move = false;
 			
 			switch(direction) {
 				
@@ -175,10 +196,14 @@ function game() {
 						for(y = 0; y < rows; y++) {
 							if(cell[y][x] != undefined) {
 								for(key = y; key < rows; key++) {
-									if((y != key) && (cell[key][x] != undefined) && (cell[y][x] == cell[key][x])) {
-										cell[y][x] += cell[key][x];
-										cell[key][x] = undefined;
-										score += cell[y][x];
+									if((y != key) && (cell[key][x] != undefined)) {
+										if(cell[y][x] == cell[key][x]) {
+											cell[y][x] += cell[key][x];
+											cell[key][x] = undefined;
+											score += cell[y][x];
+											move = true;
+										}
+										key = rows;
 									}
 								}
 							}
@@ -189,6 +214,7 @@ function game() {
 									if((cell[y][x] == undefined) && (cell[key][x] != undefined)) {
 										cell[y][x] = cell[key][x];
 										cell[key][x] = undefined;
+										move = true;
 									}
 								}
 							}
@@ -202,10 +228,14 @@ function game() {
 						for(x = columns -1; x >= 0; x--) {
 							if(cell[y][x] != undefined) {
 								for(key = x; key >= 0; key--) {
-									if((x != key) && (cell[y][key] != undefined) && (cell[y][x] == cell[y][key])) {
-										cell[y][x] += cell[y][key];
-										cell[y][key] = undefined;
-										score += cell[y][x];
+									if((x != key) && (cell[y][key] != undefined)) {
+										if(cell[y][x] == cell[y][key]) {
+											cell[y][x] += cell[y][key];
+											cell[y][key] = undefined;
+											score += cell[y][x];
+											move = true;
+										}
+										key = 0;
 									}
 								}
 							}
@@ -216,6 +246,7 @@ function game() {
 									if((cell[y][x] == undefined) &&(cell[y][key] != undefined)) {
 										cell[y][x] = cell[y][key];
 										cell[y][key] = undefined;
+										move = true;
 									}
 								}
 							}
@@ -229,10 +260,14 @@ function game() {
 						for(y = rows - 1; y >= 0; y--) {
 							if(cell[y][x] != undefined) {
 								for(key = y; key >= 0; key--) {
-									if((y != key) && (cell[key][x] != undefined) && (cell[y][x] == cell[key][x])) {
-										cell[y][x] += cell[key][x];
-										cell[key][x] = undefined;
-										score += cell[y][x];
+									if((y != key) && (cell[key][x] != undefined)) {
+										if(cell[y][x] == cell[key][x]) {
+											cell[y][x] += cell[key][x];
+											cell[key][x] = undefined;
+											score += cell[y][x];
+											move = true;
+										}
+										key = 0;
 									}
 								}
 							}
@@ -243,6 +278,7 @@ function game() {
 									if((cell[y][x] == undefined) &&(cell[key][x] != undefined)) {
 										cell[y][x] = cell[key][x];
 										cell[key][x] = undefined;
+										move = true;
 									}
 								}
 							}
@@ -256,10 +292,14 @@ function game() {
 						for(x = 0; x < columns; x++) {
 							if(cell[y][x] != undefined) {
 								for(key = x; key < columns; key++) {
-									if((x != key) && (cell[y][key] != undefined) && (cell[y][x] == cell[y][key])) {
-										cell[y][x] += cell[y][key];
-										cell[y][key] = undefined;
-										score += cell[y][x];
+									if((x != key) && (cell[y][key] != undefined)) {
+										if(cell[y][x] == cell[y][key]) {
+											cell[y][x] += cell[y][key];
+											cell[y][key] = undefined;
+											score += cell[y][x];
+											move = true;
+										}
+										key = columns;
 									}
 								}
 							}
@@ -270,6 +310,7 @@ function game() {
 									if((cell[y][x] == undefined) && (cell[y][key] != undefined)) {
 										cell[y][x] = cell[y][key];
 										cell[y][key] = undefined;
+										move = true;
 									}
 								}
 							}
@@ -279,7 +320,9 @@ function game() {
 			}
 			
 			// Add-on new block
-			addBlock(cell, defaultAddOnBlocks);
+			if(move == true) {
+				addBlock(cell, selectedAddOnBlocks);
+			}
 			
 			// Repopulate grid cell
 			populateGrid(cell);
@@ -288,17 +331,17 @@ function game() {
 			updateScore(score);
 
 			// Check end state
-			checkEndState(cell, defaultEndState, score);
+			checkEndState(cell, selectedEndState, score);
 
 			// Debug console
-			//console.debug(JSON.stringify(cell));
+			console.debug(JSON.stringify(cell));
 		}
 		
 		// Repopulate grid cell
 		populateGrid(cell);
 		
 		// Debug console
-		//console.debug(JSON.stringify(cell));
+		console.debug(JSON.stringify(cell));
 
 		gameObject.newGame.navigateBlock = navigateBlock;
 	}
@@ -314,11 +357,10 @@ function game() {
 *
 * FUTURE ENHANCEMENTS:
 * -------------------
-* Dynamically control defaultRows, defaultColumns, defaultStartingBlocks, defaultAddOnBlocks and defaultEndState in UI.
-* Able to save score in member record and display in leaderboard.
+* Able to save score in member record and display leaderboard.
 * Able to use keyboard arrow keys and mouse slide to navigate block.
 *
 * LIMITATIONS:
 * -----------
-* For loops in navigateBlock may not be efficient (and may be buggy).
+* For loops in navigateBlock() may not be efficient.
 */
