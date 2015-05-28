@@ -370,14 +370,21 @@ function game() {
 	return gameObject;
 }
 
+// Window event to register keyboard input
+document.onkeydown = function(evt) {
+    event = evt || window.event;
+    switch (event.keyCode) {
+        case 87: Game.newGame.navigateBlock(1); break;
+        case 68: Game.newGame.navigateBlock(2); break;
+		case 83: Game.newGame.navigateBlock(3); break;
+		case 65: Game.newGame.navigateBlock(4); break;
+    }
+};
+
 /*
 * ----- *
 * NOTES
 * ----- *
-*
-* FUTURE ENHANCEMENTS:
-* -------------------
-* Able to use keyboard arrow keys and mouse slide to navigate block.
 *
 * LIMITATIONS:
 * -----------
