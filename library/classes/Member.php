@@ -26,12 +26,18 @@ class Member extends db {
 	public $memberStatus = NULL;
 
 	/*
+	* Last login of member
+	* @var datetime
+	*/
+	public $memberLastLogin = NULL;
+
+	/*
 	* Create login session of member
 	* @access public
 	* @param array $member_info - Member information block
 	* @return true
 	*/
-	public function doLogin($member_info = array()) {	
+	public function doLogin($member_info = array()) {
 		$this->updateMemberLastLogin($member_info['id']);
 		$_SESSION['member']['id'] = $member_info['id'];
 		$_SESSION['member']['email'] = $member_info['email'];
@@ -127,7 +133,6 @@ class Member extends db {
 	* @return results array if successful, false if failed
 	*/
 	public function getMember($member_id = NULL, $email = NULL, $token = NULL, $status = NULL) {
-		global $db;
 		$sql = "
 		SELECT id, email, password, token, status, last_login, creation_timestamp, modified_timestamp 
 		FROM tbl_member 
@@ -171,10 +176,80 @@ class Member extends db {
 	* @param integer $member_id - ID of member record
 	* @return true if successful, false if failed
 	*/
+	public function updateMember($member_id) {
+		if ($member_id) {
+			$sql = "UPDATE tbl_member SET ";
+			$sql .= $this->memberPassword ? "password = '".$this->generateHashkey($this->memberPassword)."', " : NULL;
+			$sql .= $this->memberStatus ? "status = ".$this->memberStatus.", " : NULL;
+			$sql .= "modified_timestamp = NOW() ";
+			$sql .= "WHERE id = ".$member_id;
+			if ($this->Execute($sql)) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
+
+	/*
+	* Update member last login
+	* @access public
+	* @param integer $member_id - ID of member record
+	* @return true if successful, false if failed
+	*/
 	public function updateMemberLastLogin($member_id) {
 		if ($member_id) {
 			$sql = "UPDATE tbl_member SET last_login = NOW() WHERE id = ".$member_id;
 			if ($this->Execute($sql)) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
+
+	/*
+	* Get member leaderboard
+	* @access public
+	* @return true if successful, false if failed
+	*/
+	public function getMemberPoints() {
+		$sql = "SELECT member_id, COUNT(*) AS games, SUM(points) AS points, timestamp FROM tbl_member_points GROUP BY member_id ORDER BY points DESC";
+		if ($result = $this->Execute($sql)) {
+			$arrResults = array();
+			$counter = 1;
+			while ($result_row = $result->FetchRow()) {
+				$member = $this->getMember($result_row['member_id']);
+				array_push($arrResults, array(
+				"rank" => $counter, 
+				"email" => $member['email'], 
+				"games" => $result_row['games'], 
+				"points" => number_format($result_row['points'])));
+				$counter ++;
+			}
+			return $arrResults;
+		} else {
+			return false;
+		}
+	}
+
+	/*
+	* Create record in tbl_member_points
+	* @access public
+	* @param integer $member_id - ID of member record
+	* @param float $points - Points obtained
+	* @return true if successful, false if failed
+	*/
+	public function createMemberPoints($member_id, $points) {
+		if ($member_id) {
+			$record['member_id'] = $member_id;
+			$record['points'] = $points;
+			$record['timestamp'] = date("Y-m-d H:i:s", time());
+			if ($this->insertRcd("tbl_member_points", $record)) {
 				return true;
 			} else {
 				return false;

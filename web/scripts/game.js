@@ -112,31 +112,49 @@ function game() {
 	* @access private
 	* @param array $cell - Cell array to check
 	* @param integer $condition - End state condition
-	* @param integer $score - End state score
+	* @param float $score - End state score
 	*/
-	function checkEndState(cell, condition, score) {
+	function checkEndState(cell, condition, score, member_id) {
 		var win = false;
 		var cont = false;
 		for(y = 0; y < cell.length; y++) {
 			for(x = 0; x < cell[y].length; x++) {
 				if(cell[y][x] == condition) {
-					win = true;
-				} else if(cell[y][x] == undefined) {
-					cont = true;
+					postScore(member_id, score);
 				}
 			}
 		}
-		if(win == true) {
-			alert('COMPLETED!\nYOUR SCORE: '+score);
-		} else if(cont != true) {
-			alert('GAME OVER!\nYOUR SCORE: '+score);
-		}
 	}
-	
+
+	/*
+	* Insert points record via AJAX call
+	* @access private
+	* @param integer $member_id - 
+	* @param float $points - Points obtained
+	* @alert HTTP response text if successful
+	*/	
+	function postScore(member_id, score) {
+		document.getElementById("button_top").disabled = true;
+		document.getElementById("button_right").disabled = true; 
+		document.getElementById("button_bottom").disabled = true; 
+		document.getElementById("button_left").disabled = true;
+
+		var url = 'ajax.updateMemberPoints.php';
+		var parameters = "id="+member_id+"&points="+score;
+		var http = new XMLHttpRequest();
+		
+		http.open("POST", url, true);
+		http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+		http.send(parameters);
+		http.onload = function() {
+			alert(http.responseText);
+		}
+	}	
+
 	/*
 	* Update score in HTML
 	* @access private
-	* @param integer $score - Score to update in HTML
+	* @param float $score - Score to update in HTML
 	*/
 	function updateScore(score) {
 		document.getElementById('score').innerHTML = score;
@@ -147,7 +165,9 @@ function game() {
 	* @access public
 	* @param integer $blocks - Starting blocks to generate
 	*/
-	function newGame() {
+	function newGame(member_id) {
+
+		var member_id = member_id;
 
 		// Get default variables
 		var selectRows = document.getElementById('rows');
@@ -331,7 +351,7 @@ function game() {
 			updateScore(score);
 
 			// Check end state
-			checkEndState(cell, selectedEndState, score);
+			checkEndState(cell, selectedEndState, score, member_id);
 
 			// Debug console
 			console.debug(JSON.stringify(cell));
@@ -357,10 +377,9 @@ function game() {
 *
 * FUTURE ENHANCEMENTS:
 * -------------------
-* Able to save score in member record and display leaderboard.
 * Able to use keyboard arrow keys and mouse slide to navigate block.
 *
 * LIMITATIONS:
 * -----------
-* For loops in navigateBlock() may not be efficient.
+* For loops in navigateBlock() function may not be efficient.
 */

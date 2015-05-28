@@ -2,9 +2,9 @@ CREATE DATABASE  IF NOT EXISTS `db_mindvalley` /*!40100 DEFAULT CHARACTER SET la
 USE `db_mindvalley`;
 -- MySQL dump 10.13  Distrib 5.6.17, for Win32 (x86)
 --
--- Host: 210.5.42.200    Database: db_mindvalley
+-- Host: 127.0.0.1    Database: db_mindvalley
 -- ------------------------------------------------------
--- Server version	5.5.8
+-- Server version	5.6.16
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -34,21 +34,7 @@ CREATE TABLE `tbl_bookmark` (
   `creation_timestamp` datetime DEFAULT NULL,
   `modified_timestamp` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `tbl_lookup`
---
-
-DROP TABLE IF EXISTS `tbl_lookup`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `tbl_lookup` (
-  `group_id` int(9) NOT NULL,
-  `item_id` int(9) NOT NULL,
-  `text` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -70,6 +56,20 @@ CREATE TABLE `tbl_member` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tbl_member_points`
+--
+
+DROP TABLE IF EXISTS `tbl_member_points`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tbl_member_points` (
+  `member_id` int(9) NOT NULL,
+  `points` float NOT NULL,
+  `timestamp` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -80,4 +80,4 @@ CREATE TABLE `tbl_member` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-05-23 19:02:20
+-- Dump completed on 2015-05-29  4:39:07
