@@ -52,7 +52,6 @@
 
 ## Limitations
 
-* My Bookmarks: Creating a bookmark using an existing tiny URL may cause infinite loop. [FIXED: 25-May-2015 8:38PM]
 * 2048 Game: navigateBlock() function may not be efficient.
 
 ## Future Enhancements
@@ -61,5 +60,4 @@
 * My Bookmarks: Able to edit bookmarks.
 * My Bookmarks: Implement web services for easier integration with other websites or applications.
 * My Bookmarks: Implement description indexing using meta tags of the bookmarked URL.
-* 2048 Game: Able to save score in member record and display leaderboard.
 * 2048 Game: Able to use keyboard keys and mouse slide to navigate blocks.
