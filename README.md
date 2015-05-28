@@ -46,7 +46,7 @@
 
 1. Select grid size, starting blocks, add-on blocks and victory condition. Click on NEW GAME to generate a two-dimensional array and create corresponding grid table in the HTML.
 
-2. Click on the arrow buttons to navigate blocks. The blocks will be moved and summed accordingly by looping through and manipulating the index key and value of the two dimensional array.
+2. Click on the arrow buttons or keyboard ("W", "A", "S" or "D") to navigate blocks. The blocks will be moved and summed accordingly by looping through and manipulating the index key and value of the two dimensional array.
 
 3. Game will end when each of the generated two-dimensional array has stored a value or one of the value in the two-dimensional array has reached the victory condition. 
 
@@ -60,4 +60,3 @@
 * My Bookmarks: Able to edit bookmarks.
 * My Bookmarks: Implement web services for easier integration with other websites or applications.
 * My Bookmarks: Implement description indexing using meta tags of the bookmarked URL.
-* 2048 Game: Able to use keyboard keys and mouse slide to navigate blocks.
