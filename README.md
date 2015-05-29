@@ -48,7 +48,7 @@
 
 2. Click on the arrow buttons or keyboard ("W", "A", "S" or "D") to navigate blocks. The blocks will be moved and summed accordingly by looping through and manipulating the index key and value of the two dimensional array.
 
-3. Game will end when each of the generated two-dimensional array has stored a value or one of the value in the two-dimensional array has reached the victory condition. 
+3. Game will end when one of the value in the two-dimensional array has reached the selected victory condition. Score will only be updated to the user record when a game is won.
 
 ## Limitations
 
