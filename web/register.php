@@ -46,4 +46,15 @@ if ($_REQUEST['submit']) {
 }
 $smarty->assign("email", $_REQUEST['email']);
 $smarty->display('templates/register.html');
+
+/*
+* ----- *
+* NOTES
+* ----- *
+*
+* FUTURE ENHANCEMENTS:
+* -------------------
+* Implement capcha code in registration form.
+*/
+
 ?>
