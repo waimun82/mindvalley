@@ -568,7 +568,7 @@ a#acc-stats {
 #content-table-inner {
 	font-size: 12px;
 	line-height: 12px;
-	padding: 10px 0 20px 0;
+	padding: 0 0 20px 0;
 }
 #tbl-border-top {
 	background: url(../images/shared/border_bit.jpg) top repeat-x;
