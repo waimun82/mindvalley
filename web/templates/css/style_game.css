@@ -14,20 +14,23 @@
 	padding: 10px;
 	text-align: left;
 }
+.game-control td {
+	text-align: center;
+}
 .game-control .game-button {
+	cursor: pointer;
 	background-color: #3D3935;
 	color: #FFFFFF;
 	font-size: 50px;
-	text-align: center;
 }
-.game-control .vertical {
-	width: 100%;
+.game-control .horizontal {
+	width: 400px;
 	height: 80px;
 	margin: 5px 0;
 }
-.game-control .horizontal {
+.game-control .vertical {
 	width: 80px;
-	height: 100%;
+	height: 400px;
 	margin: 0 5px;
 }
 #game-grid {

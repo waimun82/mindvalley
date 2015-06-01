@@ -48,6 +48,8 @@ function game() {
 		table += '</table>';
 		document.getElementById('game-control').style.visibility = 'visible';
 		document.getElementById('game-grid').innerHTML = table;
+		var targetOffset = $('#game-control').offset();
+		$(window).scrollTop(targetOffset.top);
 	}
 
 	/*
