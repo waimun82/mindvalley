@@ -28,13 +28,18 @@ if ($_REQUEST['add']) {
 				// Create bookmark record
 				$Bookmark->bookmarkUrl = $_REQUEST['url'];
 				$Bookmark->bookmarkStatus = GBL_PUBLISH_STATUS_ACTIVE;
-				if (!$Bookmark->createBookmark()) {
+				if (!$hashkey = $Bookmark->createBookmark()) {
 					$smarty->assign("error", "ERROR: Unable to create record!");
 					$smarty->assign("url", $_REQUEST['url']);
 				} else {
 
 					// Update .htaccess
-					$Bookmark->writeHtaccess("../.htaccess");
+					$Bookmark->writeHtaccess("../.htaccess", $hashkey);
+
+					// Update cache
+					$Bookmark->updateCache("../.cache", $hashkey, $_REQUEST['url']);
+
+					// Return message
 					$smarty->assign("success", "URL record created!");
 				}
 			}
@@ -76,6 +81,7 @@ SmartyPaginate::reset();
 * Able to edit bookmarks.
 * Implement bookmark web services for easier integration with other websites or applications.
 * Implement description indexing using meta tags of the bookmarked URL.
+* Add cronjob to clean up cache file.
 */
 
 ?>

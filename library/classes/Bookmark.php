@@ -27,7 +27,7 @@ class Bookmark extends db {
 	*/
 	private function generateHashkey($string) {
 		if ($string) {
-			return substr(md5($string), 0, 8);
+			return substr(md5($string.rand()), 0, 8);
 		} else {
 			return false;
 		}
@@ -125,7 +125,8 @@ class Bookmark extends db {
 		$record['creation_timestamp'] = date("Y-m-d H:i:s", time());
 		$record['modified_timestamp'] = date("Y-m-d H:i:s", time());
 		if ($this->insertRcd("tbl_bookmark", $record)) {
-			return $this->getRecordId();
+			return $record['hashkey']; 
+			//return $this->getRecordId();
 		} else {
 			return false;
 		}
@@ -181,9 +182,11 @@ class Bookmark extends db {
 	* @param integer $bookmark_id - ID of bookmark record
 	* @return true if successful, false if failed
 	*/
-	public function updateBookmarkViewCount($bookmark_id) {
-		if ($bookmark_id) {
-			$sql = "UPDATE tbl_bookmark SET views = views + 1 WHERE id = ".$bookmark_id;
+	public function updateBookmarkViewCount($bookmark_id = NULL, $hashkey = NULL) {
+		if (($bookmark_id) || ($hashkey)) {
+			$sql = "UPDATE tbl_bookmark SET views = views + 1 WHERE 1=1 ";
+			$sql .= $bookmark_id ? "AND id = ".$bookmark_id." " : NULL;
+			$sql .= $hashkey ? "AND hashkey = '".$hashkey."' " : NULL;
 			if ($this->Execute($sql)) {
 				return true;
 			} else {
@@ -198,18 +201,61 @@ class Bookmark extends db {
 	* Write .htaccess RewriteRule for root index file to get hashkey
 	* @access public
 	* @param string $file_path - File path of .htaccess file
-	* @param integer $hashkey - Hashkey of URL to redirect
+	* @param string $hashkey - Hashkey of URL to redirect
 	* @return true if successful, false if failed
 	*/
-	public function writeHtaccess($file_path) {
-		$content = "RewriteEngine on";
-		$bookmarks = $this->getBookmark(NULL, NULL, NULL, NULL, GBL_PUBLISH_STATUS_ACTIVE);
-		foreach($bookmarks AS $bookmark) {
-			$content .= "\nRewriteRule ^".$bookmark['hashkey']."$ index.php?id=".$bookmark['hashkey']." [NC,L]";
+	public function writeHtaccess($file_path, $hashkey) {
+		if (file_put_contents($file_path, "RewriteRule ^".$hashkey."$ index.php?id=".$hashkey." [NC,L]\r\n", FILE_APPEND | LOCK_EX)) {
+			return true;
+		} else {
+			return false;
 		}
-		$file = fopen($file_path, 'w') or die("Unable to write to HTACCESS file.");
-		fwrite($file, $content);
-		fclose($file);
+	}
+	
+	/*
+	* Check if hashkey exist in cache file
+	* @access public
+	* @param string $file_path - File path of .htaccess file
+	* @param string $hashkey - Hashkey of URL to redirect
+	* @return matching record if successful, false if failed
+	*/
+	public function getCache($file_path, $hashkey) {
+		header('Content-Type: text/plain');
+		$contents = file_get_contents($file_path);
+		$pattern = "/^.*".$hashkey.".*\$/m";
+		if(preg_match_all($pattern, $contents, $matches)){
+		   $result = explode("|", $matches[0][0]);
+		   return array("timestamp" => $result[0], "hashkey" => $result[1], "url" => $result[2]);
+		}
+		else{
+		   return false;
+		}
+	}
+
+	/*
+	* Write cache file
+	* @access public
+	* @param string $file_path - File path of .htaccess file
+	* @param string $hashkey - Hashkey of URL to redirect
+	* @param integer $url - Hashkey of URL to redirect
+	* @return true if successful, false if failed
+	*/
+	public function updateCache($file_path, $hashkey, $url) {
+		if (file_put_contents($file_path, time()."|".$hashkey."|".$url."\r\n", FILE_APPEND | LOCK_EX)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	/*
+	* Delete expired cache file
+	* @access public
+	* @param string $file_path - File path of .htaccess file
+	* @return true if successful, false if failed
+	*/
+	public function deleteCache($file_path) {
+
 	}
 
 }
